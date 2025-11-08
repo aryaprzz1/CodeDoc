@@ -10,10 +10,19 @@ function EditorComponent() {
 
     if (openFiles.length <= 0) {
         return (
-            <div className="flex h-full w-full items-center justify-center">
-                <h1 className="text-xl text-white">
-                    No file is currently open.
-                </h1>
+            <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8">
+                <div className="relative">
+                    <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
+                    <div className="relative text-6xl">📝</div>
+                </div>
+                <div className="text-center">
+                    <h1 className="mb-2 text-2xl font-bold text-light">
+                        No files open
+                    </h1>
+                    <p className="text-gray-400">
+                        Open a file from the sidebar to start editing
+                    </p>
+                </div>
             </div>
         )
     }

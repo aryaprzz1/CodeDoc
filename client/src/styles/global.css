@@ -4,33 +4,83 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    .view-title {
-        @apply mb-2 w-full border-b pb-2 text-start text-lg;
+@layer base {
+    body {
+        @apply bg-dark text-light;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+        background-attachment: fixed;
+    }
+
+    html {
+        @apply bg-dark;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+        background-attachment: fixed;
+    }
+
+    #root {
+        @apply bg-dark;
+        min-height: 100vh;
     }
 }
 
-body {
-    font-family: "Space Grotesk", sans-serif;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    background-color: black !important;
-    background: black !important;
+@layer components {
+    .view-title {
+        @apply mb-4 w-full border-b border-darkHover pb-3 text-start text-xl font-semibold text-light;
+    }
 
-    --sb-track-color: #3d404a;
-    --sb-thumb-color: #e1e1ffb3;
-    --sb-size: 6px;
+    .card {
+        @apply rounded-xl bg-darkLight border border-darkHover shadow-lg backdrop-blur-sm;
+    }
+
+    .card-hover {
+        @apply transition-all duration-300 hover:border-primary/50 hover:shadow-glow;
+    }
+
+    .btn-primary {
+        @apply px-6 py-3 rounded-lg bg-gradient-primary text-white font-semibold 
+               transition-all duration-200 hover:shadow-glow hover:scale-105 
+               active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 rounded-lg bg-darkHover text-light font-semibold 
+               border border-darkHover transition-all duration-200 
+               hover:border-primary/50 hover:bg-darkLight;
+    }
+
+    .input-modern {
+        @apply w-full rounded-lg bg-darkLight border border-darkHover 
+               px-4 py-3 text-light placeholder:text-gray-400
+               focus:outline-none focus:ring-2 focus:ring-primary/50 
+               focus:border-primary transition-all duration-200;
+    }
+
+    .glass-effect {
+        @apply backdrop-blur-xl bg-darkLight/80 border border-white/10;
+    }
 }
 
-html {
-    background-color: black !important;
-    background: black !important;
+@layer utilities {
+    .text-gradient {
+        @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+    }
+
+    .bg-gradient-animated {
+        background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 8s ease infinite;
+    }
 }
 
-#root {
-    background-color: black !important;
-    background: black !important;
+/* Custom Scrollbar */
+:root {
+    --sb-track-color: #1a1f3a;
+    --sb-thumb-color: #6366f1;
+    --sb-size: 8px;
 }
 
 ::-webkit-scrollbar {
@@ -40,15 +90,17 @@ html {
 
 ::-webkit-scrollbar-track {
     background: var(--sb-track-color);
-    border-radius: 5px;
-    height: var(--sb-size);
-    width: var(--sb-size);
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--sb-thumb-color);
-    border-radius: 5px;
-    height: var(--sb-size);
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #818cf8;
 }
 
 @supports not selector(::-webkit-scrollbar) {
@@ -57,24 +109,66 @@ html {
     }
 }
 
+/* Animations */
 @keyframes up-down {
     0% {
-        transform: translateY(-20px);
+        transform: translateY(-10px);
     }
     100% {
-        transform: translateY(0px);
+        transform: translateY(10px);
     }
 }
 
-/* Editor */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Editor Styles */
 .cm-editor {
     max-height: 93vh;
+    @apply bg-darkLight;
 }
 
 .cm-editor .cm-scroller {
-    font-family: "Space Mono", monospace;
-    /* min-height: 100vh; */
+    font-family: "JetBrains Mono", "Fira Code", "Space Mono", monospace;
+}
+
+.cm-focused {
+    @apply outline-none;
+}
+
+.cm-editor.cm-focused {
+    @apply outline-none;
 }
 
 select {
@@ -95,7 +189,6 @@ select {
 }
 
 /* Github Corner */
-
 .github-corner:hover .octo-arm {
     animation: octocat-wave 560ms ease-in-out;
 }
@@ -113,4 +206,13 @@ select {
     80% {
         transform: rotate(10deg);
     }
+}
+
+/* Glow Effects */
+.glow-primary {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.glow-primary-lg {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
 }

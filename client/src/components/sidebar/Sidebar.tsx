@@ -44,47 +44,53 @@ function Sidebar() {
 
     return (
         <aside className="flex w-full md:h-full md:max-h-full md:min-h-full md:w-auto">
+            {/* Navigation Bar */}
             <div
                 className={cn(
-                    "fixed bottom-0 left-0 z-50 flex h-[50px] w-full gap-4 self-end overflow-hidden border-t border-darkHover bg-dark p-2 md:static md:h-full md:w-[50px] md:min-w-[50px] md:flex-col md:border-r md:border-t-0 md:p-2 md:pt-4",
+                    "fixed bottom-0 left-0 z-50 flex h-[60px] w-full gap-2 self-end overflow-x-auto border-t border-darkHover/50 bg-darkLight/95 backdrop-blur-xl p-2 shadow-2xl md:static md:h-full md:w-[70px] md:min-w-[70px] md:flex-col md:border-r md:border-t-0 md:border-darkHover/50 md:p-4 md:pt-6",
                     {
                         hidden: minHeightReached,
                     },
                 )}
             >
-                <SidebarButton
-                    viewName={VIEWS.FILES}
-                    icon={viewIcons[VIEWS.FILES]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.CHATS}
-                    icon={viewIcons[VIEWS.CHATS]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.COPILOT}
-                    icon={viewIcons[VIEWS.COPILOT]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.RUN}
-                    icon={viewIcons[VIEWS.RUN]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.PREVIEW}
-                    icon={viewIcons[VIEWS.PREVIEW]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.CLIENTS}
-                    icon={viewIcons[VIEWS.CLIENTS]}
-                />
-                <SidebarButton
-                    viewName={VIEWS.SETTINGS}
-                    icon={viewIcons[VIEWS.SETTINGS]}
-                />
+                <div className="flex gap-2 md:flex-col md:gap-3">
+                    <SidebarButton
+                        viewName={VIEWS.FILES}
+                        icon={viewIcons[VIEWS.FILES]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.CHATS}
+                        icon={viewIcons[VIEWS.CHATS]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.COPILOT}
+                        icon={viewIcons[VIEWS.COPILOT]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.RUN}
+                        icon={viewIcons[VIEWS.RUN]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.PREVIEW}
+                        icon={viewIcons[VIEWS.PREVIEW]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.CLIENTS}
+                        icon={viewIcons[VIEWS.CLIENTS]}
+                    />
+                    <SidebarButton
+                        viewName={VIEWS.SETTINGS}
+                        icon={viewIcons[VIEWS.SETTINGS]}
+                    />
+                </div>
+
+                {/* Divider */}
+                <div className="hidden h-px w-full bg-darkHover/50 md:my-2 md:block" />
 
                 {/* Button to change activity state coding or drawing */}
-                <div className="flex h-fit items-center justify-center">
+                <div className="flex h-fit items-center justify-center md:mt-auto">
                     <button
-                        className="justify-cente flex items-center  rounded p-1.5 transition-colors duration-200 ease-in-out hover:bg-[#3D404A]"
+                        className="group flex items-center justify-center rounded-xl p-2.5 transition-all duration-200 ease-in-out hover:bg-primary/20 hover:shadow-glow"
                         onClick={changeState}
                         onMouseEnter={() => setShowTooltip(true)}
                         data-tooltip-id="activity-state-tooltip"
@@ -95,9 +101,15 @@ function Sidebar() {
                         }
                     >
                         {activityState === ACTIVITY_STATE.CODING ? (
-                            <MdOutlineDraw size={30} />
+                            <MdOutlineDraw 
+                                size={24} 
+                                className="text-primary transition-transform group-hover:scale-110" 
+                            />
                         ) : (
-                            <IoCodeSlash size={30} />
+                            <IoCodeSlash 
+                                size={24} 
+                                className="text-primary transition-transform group-hover:scale-110" 
+                            />
                         )}
                     </button>
                     {showTooltip && (
@@ -114,12 +126,19 @@ function Sidebar() {
                     )}
                 </div>
             </div>
+
+            {/* Sidebar Panel */}
             <div
-                className="absolute left-0 top-0 z-20 w-full flex-col bg-dark md:static md:min-w-[300px]"
-                style={isSidebarOpen ? {} : { display: "none" }}
+                className={cn(
+                    "absolute left-0 top-0 z-20 w-full flex-col bg-darkLight border-r border-darkHover/50 backdrop-blur-xl md:static md:min-w-[320px] md:max-w-[320px] transition-all duration-300",
+                    isSidebarOpen ? "block animate-slide-in" : "hidden md:block"
+                )}
+                style={isMobile && !isSidebarOpen ? { display: "none" } : {}}
             >
                 {/* Render the active view component */}
-                {viewComponents[activeView]}
+                <div className="h-full overflow-hidden">
+                    {viewComponents[activeView]}
+                </div>
             </div>
         </aside>
     )
